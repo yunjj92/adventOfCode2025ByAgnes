@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,21 +22,24 @@ public class CommonUtil {
 
   }
 
-  public static Map<Integer, Integer> convertToMapDay2(String textFilePath) throws IOException {
+  public static boolean isEven(Long startInput, Long endInput){
+    return (String.valueOf(startInput).length() % 2 == 0 && String.valueOf(endInput).length() % 2 == 0);
+  }
+
+  public static List<List<Long>> convertToListForDayTwo(String textFilePath) throws IOException {
 
     String originalText = convertToList(textFilePath).get(0);
     String[] partedText = originalText.split(",");
-    Map<Integer, Integer> inputNumberMap = new HashMap<>(partedText.length);
+    List<List<Long>> inputNumbersList = new ArrayList<>();
 
     for(String eachPart : partedText){
-
       String[] eachPartSplit = eachPart.split("-");
-      inputNumberMap.put(Integer.parseInt(eachPartSplit[0]), Integer.parseInt(eachPartSplit[1]));
-
+      List<Long> elementInput = List.of(Long.parseLong(eachPartSplit[0]), Long.parseLong(eachPartSplit[1]));
+      if(isEven(elementInput.get(0), elementInput.get(1)))
+        inputNumbersList.add(elementInput);
     }
 
-    return inputNumberMap;
-
+    return inputNumbersList;
   }
 
 }
